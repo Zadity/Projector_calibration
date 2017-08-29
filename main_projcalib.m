@@ -1,5 +1,6 @@
 % Projector calibration code:
-% Author : Yu-Lin Tsai and Shin-Yi Lai
+% Author : Yu-Lin, Tsai and Shin-Yi, Lai
+% Supportor : NCTU Chin-Tien, Wu Lab (ctw@math.nctu.edu.tw)
 % Email: morphling.imm97g@g2.nctu.edu.tw, sinyimo@gmail.com
 
 addpath function
