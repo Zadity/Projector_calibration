@@ -3,9 +3,9 @@
 addpath function
 load Calib_Results
 
-PI = input('½Ğ¿é¤J§ë¼vpatternÀÉ¦W: ','s'); % propixel_28.bmp
+PI = input('Please input projected pattern file name: ','s'); % propixel_28.bmp
 I = imread(PI);
-[p_data] = input('½Ğ¿é¤J§ë¼vpatternt¤Ø¤o[ªø,¼e,¤è®æ¼Æ,¨C®æpixel¼Æ]: '); % [800,600,6,28]
+[p_data] = input('Please input projected pattern size [length,width,square number, pixel number of each square]: '); % [800,600,6,28]
 points_2d = corner_pts( I,p_data(1),p_data(2),p_data(3),p_data(4) );
 figure(5)
 imshow(I)
@@ -15,10 +15,10 @@ camera_resolution = [nx ny];
 projector_resolution = [p_data(1) p_data(2)];
 proj_square_data = [p_data(3) p_data(4)];
 
-mode = input('®Õ¥¿§ë¼v¾÷ªº·Ó¤ù¬O§_¦P¬Û¾÷®Õ¥¿·Ó¤ù?¬O½Ğ¿é¤J0,§_½Ğ¿é¤J1: ');
+mode = input('Is projected image same as camera calibration image? 0 for true, 1 for false: ');
 if mode ==1
-im_name = input('¿é¤J·Ó¤ùÀÉ¦W(Á|¨Ò:IMG_1.JPG,«h¿é¤JIMG_): ','s');% ['z1_'];
-im_fmt = input('¿é¤J·Ó¤ù°ÆÀÉ¦W(Á|¨Ò:IMG_1.JPG,«h¿é¤J.JPG): ','s');% ['.JPG'];
+im_name = input('input image name (ex:IMG_1.JPG,input:IMG_): ','s');% ['z1_'];
+im_fmt = input('input image File name(ex:IMG_1.JPG,input:.JPG): ','s');% ['.JPG'];
 end
 calib_image_num = input('Total image number: ');
 
@@ -50,13 +50,13 @@ for k= 1:i
         II = double((imread(calib_name)));
     end
     
-    % ¦³±ÛÂà¤~­n
+    % æœ‰æ—‹è½‰æ‰è¦
 %     II = imrotate(II,90);
     
     display(['Processing Image number ' num2str(k)]);
-    %     ProjectedGrid_2dpoints_cameraPlane = extract_grid(III,wintx,winty,fc,cc,kc,dX,dY); % §ë¼v¼v¹³®y¼Ğ
-    ProjectedGrid_2dpoints_cameraPlane = extract_grid(II,wintx,winty); % §ë¼v¼v¹³®y¼Ğ
-    projpoints_in_cameraplane(:,:,k) = ProjectedGrid_2dpoints_cameraPlane(:,:); % ¬Û¾÷Â^¨úªº§ë¼v¥­­±
+    %     ProjectedGrid_2dpoints_cameraPlane = extract_grid(III,wintx,winty,fc,cc,kc,dX,dY); % project image coordinate
+    ProjectedGrid_2dpoints_cameraPlane = extract_grid(II,wintx,winty); % project image coordinate
+    projpoints_in_cameraplane(:,:,k) = ProjectedGrid_2dpoints_cameraPlane(:,:); % projected plane captured by camera
     
     m = size(ProjectedGrid_2dpoints_cameraPlane,2);
     ProjectedGrid = [ProjectedGrid_2dpoints_cameraPlane;ones(1,m)];
@@ -87,11 +87,11 @@ for k= 1:i
     N(:,k) = n; 
     
     c = v3'*YY_cam(:,1);
-    ProjectedGrid_cam = [1 -alpha_c 0;0 1 0;0 0 1]*[1/fc(1) 0 0;0 1/fc(2) 0;0 0 1]*[1 0 -cc(1);0 1 -cc(2);0 0 1]*ProjectedGrid; % §ë¼v¥­­±³z¹L¬Û¾÷°Ñ¼Æ¤Ïºâ
+    ProjectedGrid_cam = [1 -alpha_c 0;0 1 0;0 0 1]*[1/fc(1) 0 0;0 1/fc(2) 0;0 0 1]*[1 0 -cc(1);0 1 -cc(2);0 0 1]*ProjectedGrid; % projector image computed by camera parameters
     s = c./(v3'*ProjectedGrid_cam);
     ProjectedGrid_3dpoints = ProjectedGrid_cam.*(ones(3,1)*s);
     %     v3'*YY_cam-c
-%     YY(:,:,k) = YY_cam; % ´Ñ½L®æ¦b¬Û¾÷ªÅ¶¡®y¼Ğ
+%     YY(:,:,k) = YY_cam; % Checkerboard in camera image coordinate
     
     figure(4);
     hhh= mesh(YYx,YYz,-YYy);
