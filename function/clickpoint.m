@@ -1,4 +1,4 @@
-clear all
+% clear all
 
 addpath function
 load Calib_Results

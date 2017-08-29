@@ -19,7 +19,7 @@ maxI = max(I(:));
 Id = 255*(I - minI)/(maxI - minI);
 
 figure(2);
-image(Id);
+imshow(uint8(Id));
 colormap(map);
 
 if ~isempty(xr);
@@ -131,7 +131,7 @@ while need_to_click,
     delta = 30;
     
     
-    figure(2); image(Id);
+    figure(2); imshow(uint8(Id));
     colormap(map);
     hold on;
     plot([x;x(1)],[y;y(1)],'g-');
@@ -295,7 +295,7 @@ y_box_kk = [grid_pts(2,:)-(winty+.5);grid_pts(2,:)-(winty+.5);grid_pts(2,:)+(win
 
 
 figure(3);
-image(Id); colormap(map); hold on;
+imshow(uint8(Id)); colormap(map); hold on;
 plot(grid_pts(1,:)+1,grid_pts(2,:)+1,'r+');
 plot(x_box_kk+1,y_box_kk+1,'-b');
 plot(grid_pts(1,ind_corners)+1,grid_pts(2,ind_corners)+1,'mo');
