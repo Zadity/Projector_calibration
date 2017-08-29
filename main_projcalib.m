@@ -1,3 +1,7 @@
+% Projector calibration code:
+% Author : Yu-Lin Tsai and Shin-Yi Lai
+% Email: morphling.imm97g@g2.nctu.edu.tw, sinyimo@gmail.com
+
 addpath function
 
 cell_list = {};
